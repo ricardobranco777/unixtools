@@ -1,3 +1,17 @@
+strerror/strerror
+strsignal/strsignal
+**/a.out
+**/*.o
+**/*.out
+**/*.exe
+**/*.d
+**/.depend
+**/.gdbinit
+**/errnos.h
+**/signos.h
+**/*.orig
+**/*.rej
+
 # Prerequisites
 *.d
 
