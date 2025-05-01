@@ -1,0 +1,40 @@
+.\" SPDX-License-Identifier: BSD-2-Clause
+.Dd May 1, 2025
+.Dt STRSIGNAL 1
+.Os
+.Sh NAME
+.Nm strsignal
+.Nd print signal message strings for signal numbers or names
+.Sh SYNOPSIS
+.Nm
+.Op Fl n
+.Op Ar [SIG]name... Ar signum...
+.Sh DESCRIPTION
+The
+.Nm
+utility prints the description strings corresponding to signal numbers
+or names defined in
+.In signal.h .
+If no arguments are provided, it prints all known signals.
+.Pp
+If the argument is numeric, it is treated as a signal number.
+Otherwise, it is treated as a signal name with or without the
+.Dq SIG
+prefix
+(e.g.,
+.Dq INT
+or
+.Dq SIGINT ) .
+.Sh OPTIONS
+.Bl -tag -width "-n"
+.It Fl n
+Only print the signal description, without the number or signal name.
+.El
+.Sh EXIT STATUS
+.Ex -std
+.Sh SEE ALSO
+.Xr strsignal 3 ,
+.Xr signal 3 ,
+.Xr kill 1
+.Sh AUTHORS
+.An Ricardo Branco

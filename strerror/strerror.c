@@ -1,107 +1,158 @@
+/* SPDX-License-Identifier: BSD-2-Clause */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <signal.h>
+#include <unistd.h>
 #include <errno.h>
 #include <err.h>
-#include <unistd.h>
 
 #ifdef __linux__
 extern char *__progname;
 #define getprogname()   (__progname)
 #endif
 
-#define ISDIGIT(c)	((int)(c) >= '0' && ((int)(c) <= '9'))
+#if !defined(NSIG) && defined(_NSIG)
+#define NSIG	_NSIG
+#endif
 
-#define USAGE	"%s [-n] [-q] [errno]..."
+#undef nitems
+#define	nitems(arr)	((int)((sizeof((arr)) / sizeof((arr)[0]))))
 
-static struct {
+#define USAGE_STRERROR	"%s [-n] [errno]..."
+#define USAGE_STRSIGNAL	"%s [-n] [[SIG]name]... [signum]..."
+
+struct entry {
 	int value;
-	const char *str;
-} list[] = {
-#include "errnos.h"
-	{ -1, NULL }
+	const char *name;
 };
 
-#define FMTSTR  "%4d   %-20s %s\n"
+static struct entry errlist[] = {
+#include "errnos.h"
+};
+
+static struct entry siglist[] = {
+#include "signos.h"
+};
+
+typedef char *(*strfunc_t)(int);
+static strfunc_t strfunc;
+
+static int nflag;
+
+static int
+xatoi(const char *str)
+{
+	char *endptr;
+	int value;
+
+	errno = 0;
+	value = (int) strtoul(str, &endptr, 10);
+	if (errno || *endptr != '\0')
+		return (-1);
+
+	return (value);
+}
+
+static void
+print(int value, const char *name, const char *str)
+{
+	if (nflag)
+		printf("%s\n", str);
+	else
+		printf("%d\t%-20s %s\n", value, name, str);
+}
+
+static int
+getmax(struct entry *list, int items)
+{
+	int i, max = 0;
+#ifdef ELAST
+	if (strfunc == strerror)
+		return (ELAST);
+#endif
+#ifdef NSIG
+	if (strfunc == strsignal)
+		return (NSIG - 1);
+#endif
+	for (i = 0; i < items; i++)
+		if (list[i].value > max)
+			max = list[i].value;
+	return max;
+}
 
 int
 main(int argc, char *argv[])
 {
-	int i, j, max;
-	int value;
+	int i, n, items, value;
+	struct entry *list;
+	const char *usage;
+	char *str;
 	int ch;
-	int nflag, qflag;
-	char *s, *endptr;
 
-	nflag = qflag = 0;
+	const char *progname = getprogname();
+	if (!strncmp(progname, "strerror", sizeof("strerror") - 1)) {
+		list = errlist;
+		items = nitems(errlist);
+		usage = USAGE_STRERROR;
+		strfunc = strerror;
+	} else if (!strncmp(progname, "strsignal", sizeof("strsignal") - 1)) {
+		list = siglist;
+		items = nitems(siglist);
+		usage = USAGE_STRSIGNAL;
+		strfunc = strsignal;
+	} else
+		errx(1, "unknown program");
 
-	while ((ch = getopt(argc, argv, "nq")) != -1) {
+	while ((ch = getopt(argc, argv, "n")) != -1) {
 		switch (ch) {
 		case 'n':
 			nflag = 1;
 			break;
-		case 'q':
-			qflag = 1;
-			break;
 		default:
-			errx(1, USAGE, getprogname());
+			errx(1, usage, progname);
 		}
 	}
 
-	if (argc == optind) {
-		max = 0;
-		for (i = 0; list[i].str != NULL; i++)
-			if (list[i].value > max)
-				max = list[i].value;
-		for (i = 1; i <= max; i++) {
-			if ((s = strerror(i)) == NULL)
-				continue;
-			for (j = 0; list[j].str != NULL; j++) {
-				if (list[j].value == i) {
-					if (nflag) {
-						printf("%s\n", s);
+	argv += optind;
+
+	if (*argv == NULL) {
+		for (value = 1; value <= getmax(list, items); value++) {
+			str = strfunc(value);
+			for (i = 0; i < items; i++)
+				if (list[i].value == value) {
+					print(value, list[i].name, str);
+					if (nflag)
 						break;
-					} else
-						printf(FMTSTR, i, list[j].str, s);
 				}
-			}
 		}
+		return (0);
 	}
 
-	for (i = optind; i < argc; i++) {
-		if (ISDIGIT(argv[i][0])) {
-			errno = 0;
-			value = (int) strtoul(argv[i], &endptr, 10);
-			if (errno || *endptr != '\0')
-				errx(1, "Invalid number: %s", argv[i]);
-			for (j = 0, s = NULL; list[j].str != NULL; j++) {
-				if (list[j].value == value) {
-					if ((s = strerror(value)) == NULL)
+	for (; *argv != NULL; argv++) {
+		if ((value = xatoi(*argv)) > 0) {
+			for (i = 0, str = NULL; i < items; i++)
+				if (list[i].value == value) {
+					if ((str = strfunc(value)) == NULL)
 						break;
-					if (nflag) {
-						printf("%s\n", s);
+					print(value, list[i].name, str);
+					if (nflag)
 						break;
-					} else
-						printf(FMTSTR, value, list[j].str, s);
 				}
-			}
 		} else {
-			for (j = 0, s = NULL; list[j].str != NULL; j++) {
-				if (strcmp(argv[i], list[j].str) == 0) {
-					value = list[j].value;
-					if ((s = strerror(value)) != NULL) {
-						if (nflag)
-							printf("%s\n", s);
-						else
-							printf(FMTSTR, value, list[j].str, s);
-					}
+			n = (strfunc == strsignal && strncmp(*argv, "SIG", 3)) ? 3 : 0;
+			for (i = 0, str = NULL; i < items; i++)
+				if (strcmp(*argv, list[i].name + n) == 0) {
+					value = list[i].value;
+					if ((str = strfunc(value)) != NULL)
+						print(value, list[i].name, str);
 					break;
 				}
-			}
 		}
-		if (s == NULL && !qflag)
-			errx(1, "Unknown error: %s", argv[i]);
+		if (str == NULL)
+			errx(1, "Unknown %s: %s", progname + 3, *argv);
 	}
 
-	return 0;
+	return (0);
 }

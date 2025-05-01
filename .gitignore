@@ -1,17 +1,19 @@
 sigwincher/sigwincher
 strerror/strerror
-strsignal/strsignal
+strerror/strsignal
 **/a.out
 **/*.o
 **/*.out
 **/*.exe
 **/*.d
 **/.depend
+**/.depend.*
 **/.gdbinit
 **/errnos.h
 **/signos.h
 **/*.orig
 **/*.rej
+**/*.1.gz
 
 # Prerequisites
 *.d

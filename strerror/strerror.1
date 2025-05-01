@@ -1,0 +1,36 @@
+.\" SPDX-License-Identifier: BSD-2-Clause
+.Dd May 1, 2025
+.Dt STRERROR 1
+.Os
+.Sh NAME
+.Nm strerror
+.Nd print error message strings for errno values or names
+.Sh SYNOPSIS
+.Nm
+.Op Fl n
+.Op Ar errno ...
+.Sh DESCRIPTION
+The
+.Nm
+utility prints human-readable strings corresponding to
+error numbers or names defined in
+.In errno.h .
+If no arguments are provided, it prints all known error numbers.
+.Pp
+If the argument is numeric, it is treated as an
+errno value.
+Otherwise, it is treated as an error macro name
+(such as
+.Dq ENOENT ) .
+.Sh OPTIONS
+.Bl -tag -width "-n"
+.It Fl n
+Only print the error string, without the error number or macro name.
+.El
+.Sh EXIT STATUS
+.Ex -std
+.Sh SEE ALSO
+.Xr strerror 3 ,
+.Xr errno 3
+.Sh AUTHORS
+.An Ricardo Branco
