@@ -26,3 +26,7 @@ signos.h:
 .PHONY: clean
 clean:
 	$(RM) $(BIN) $(HDRS)
+
+.PHONY: test
+test:
+	./test.sh
