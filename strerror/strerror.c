@@ -8,17 +8,11 @@
 #include <errno.h>
 #include <err.h>
 
-#ifdef __linux__
-extern char *__progname;
-#define getprogname()   (__progname)
-#endif
+#include "common.h"
 
 #if !defined(NSIG) && defined(_NSIG)
 #define NSIG	_NSIG
 #endif
-
-#undef nitems
-#define	nitems(arr)	((int)((sizeof((arr)) / sizeof((arr)[0]))))
 
 #define USAGE_STRERROR	"%s [-n] [errno]..."
 #define USAGE_STRSIGNAL	"%s [-n] [[SIG]name]... [signum]..."
@@ -40,20 +34,6 @@ typedef char *(*strfunc_t)(int);
 static strfunc_t strfunc;
 
 static int nflag;
-
-static int
-xatoi(const char *str)
-{
-	char *endptr;
-	int value;
-
-	errno = 0;
-	value = (int) strtoul(str, &endptr, 10);
-	if (errno || *endptr != '\0')
-		return (-1);
-
-	return (value);
-}
 
 static void
 print(int value, const char *name, const char *str)

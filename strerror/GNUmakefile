@@ -2,16 +2,17 @@ BIN	= strerror strsignal
 CC	= gcc
 CFLAGS	= -Wall -Wextra -O2
 LDFLAGS	=
-HDRS	= errnos.h signos.h
+SRCS	= strerror.c common.c
+HDRS	= errnos.h signos.h common.h
 
 .PHONY: all
 all:	$(BIN)
 
-strerror: strerror.c $(HDRS)
-	$(CC) -o strerror $(LDFLAGS) $(CFLAGS) $<
+strerror: $(SRCS) $(HDRS)
+	$(CC) -o strerror $(LDFLAGS) $(CFLAGS) $(SRCS)
 
-strsignal: strerror.c $(HDRS)
-	$(CC) -o strsignal $(LDFLAGS) $(CFLAGS) $<
+strsignal: $(SRCS) $(HDRS)
+	$(CC) -o strsignal $(LDFLAGS) $(CFLAGS) $(SRCS)
 
 errnos.h:
 	@echo '#include <errno.h>' | $(CC) -E -dD - | \
@@ -25,7 +26,7 @@ signos.h:
 
 .PHONY: clean
 clean:
-	$(RM) $(BIN) $(HDRS)
+	$(RM) $(BIN) errnos.h signos.h
 
 .PHONY: test
 test:

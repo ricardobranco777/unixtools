@@ -1,6 +1,7 @@
 sigwincher/sigwincher
 strerror/strerror
 strerror/strsignal
+sysexits/sysexits
 **/a.out
 **/*.o
 **/*.out
@@ -11,9 +12,11 @@ strerror/strsignal
 **/.gdbinit
 **/errnos.h
 **/signos.h
+**/exits.h
 **/*.orig
 **/*.rej
 **/*.1.gz
+**/*.pieo
 
 # Prerequisites
 *.d

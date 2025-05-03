@@ -6,14 +6,14 @@ PROG=	strerror strsignal
 .endif
 WARNS=	3
 CFLAGS+= -O2
-HDRS=	errnos.h signos.h
+HDRS=	errnos.h signos.h common.h
 .if ${OPSYS} == "NetBSD"
-SRCS.strerror=	strerror.c
-SRCS.strsignal=	strerror.c
+SRCS.strerror=	strerror.c common.c
+SRCS.strsignal=	strerror.c common.c
 .else
-SRCS=	strerror.c
+SRCS=	strerror.c common.c
 .endif
-CLEANFILES+=	${HDRS}
+CLEANFILES+=	errnos.h signos.h
 
 MK_DEBUG_FILES=	no
 
