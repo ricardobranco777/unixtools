@@ -1,0 +1,36 @@
+.\" SPDX-License-Identifier: BSD-2-Clause
+.Dd May 3, 2025
+.Dt GAI_STRERROR 1
+.Os
+.Sh NAME
+.Nm gai_strerror
+.Nd print human-readable names or descriptions for EAI_* error codes
+.Sh SYNOPSIS
+.Nm
+.Op Fl n
+.Op Ar [EAI_]name ...
+.Op Ar errcode ...
+.Sh DESCRIPTION
+The
+.Nm
+utility prints symbolic names and/or textual descriptions for
+.Er EAI_*
+error codes as returned by
+.Xr getaddrinfo 3
+and related networking functions.
+It accepts symbolic names (with or without the
+.Dq EAI_
+prefix) or numeric error codes. If no arguments are given, it prints all known
+.Er EAI_*
+errors.
+.Sh OPTIONS
+.Bl -tag -width "-n"
+.It Fl n
+Print only the description string, without the numeric value or name.
+.El
+.Sh EXIT STATUS
+.Ex -std
+.Sh SEE ALSO
+.Xr gai_strerror 3
+.Sh AUTHORS
+.An Ricardo Branco

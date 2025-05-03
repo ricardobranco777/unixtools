@@ -1,6 +1,7 @@
 sigwincher/sigwincher
 strerror/strerror
 strerror/strsignal
+strerror/gai_strerror
 sysexits/sysexits
 **/a.out
 **/*.o
@@ -12,6 +13,7 @@ sysexits/sysexits
 **/.gdbinit
 **/errnos.h
 **/signos.h
+**/gerrnos.h
 **/exits.h
 **/*.orig
 **/*.rej

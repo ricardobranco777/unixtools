@@ -9,11 +9,11 @@ fail() {
 
 trap fail ERR
 
-for bin in strerror strsignal; do
+for bin in strerror strsignal gai_strerror; do
 	echo "Testing $bin"
 	bin="./$bin"
 	# Test list
-	test $($bin | wc -l) -gt 30
+	test $($bin | wc -l) -gt 10
 	# Test 1
 	test $($bin 1 | wc -l) -eq 1
 	# Test -n
@@ -31,5 +31,11 @@ for bin in strerror strsignal; do
 	! $bin 666 2>/dev/null 
 	$bin 777 2>&1 | grep -q "Unknown"
 done
+
+test "$(./strsignal SIGHUP)" = "$(./strsignal HUP)"
+test "$(./strsignal -n SIGHUP)" = "$(./strsignal -n HUP)"
+
+test "$(./gai_strerror EAI_FAIL)" = "$(./gai_strerror FAIL)"
+test "$(./gai_strerror -n EAI_FAIL)" = "$(./gai_strerror -n FAIL)"
 
 echo PASSED
