@@ -1,4 +1,4 @@
-SUBDIRS := strerror sysexits
+SUBDIRS := ipcmod shmcat strerror sysexits
 
 .PHONY: all clean $(SUBDIRS)
 

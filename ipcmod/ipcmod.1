@@ -1,0 +1,74 @@
+.Dd May 4, 2025
+.Dt IPCMOD 1
+.Os
+.Sh NAME
+.Nm ipcmod
+.Nd modify mode or flags of System V IPC objects
+.Sh SYNOPSIS
+.Nm
+.Op Fl i Ar pid
+.Fl m | q | s
+.Ar mode id ...
+.Sh DESCRIPTION
+The
+.Nm
+utility modifies the mode and flags of System V IPC objects:
+shared memory segments, message queues, or semaphore sets.
+.Pp
+The
+.Ar mode
+must be specified in octal.
+Bits beyond the standard permission bits may have special meaning:
+.Bl -tag -width Ds
+.It 0x1000
+Set
+.Dv IPC_RMID ,
+marking the object for removal. For message queues and semaphores,
+this is equivalent to removal via
+.Xr ipcrm 1 .
+For shared memory, the segment is destroyed after the last detach.
+.It 0x2000
+Set
+.Dv IPC_LOCK
+to lock a shared memory segment into RAM.
+This flag is Linux-only and subject to
+.Xr getrlimit 2
+with
+.Dv RLIMIT_MEMLOCK .
+.El
+.Pp
+Only one of
+.Fl m ,
+.Fl q ,
+or
+.Fl s
+must be specified:
+.Bl -tag -width "-m"
+.It Fl m
+Modify shared memory segments (shmid).
+.It Fl q
+Modify message queues (msqid).
+.It Fl s
+Modify semaphore sets (semid).
+.El
+.Sh OPTIONS
+.Bl -tag -width "-i pid"
+.It Fl i Ar pid
+On Linux, enter the IPC namespace of the process
+.Ar pid
+before performing any operations.
+.El
+.Sh EXIT STATUS
+.Ex -std
+.Sh SEE ALSO
+.Xr ipcmk 1 ,
+.Xr ipcs 1 ,
+.Xr ipcrm 1 ,
+.Xr msgctl 2 ,
+.Xr semctl 2 ,
+.Xr shmctl 2 ,
+.Xr setns 2 ,
+.Xr getrlimit 2
+.El
+.Sh AUTHORS
+.An Ricardo Branco

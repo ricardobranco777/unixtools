@@ -3,6 +3,8 @@ strerror/strerror
 strerror/strsignal
 strerror/gai_strerror
 sysexits/sysexits
+ipcmod/ipcmod
+shmcat/shmcat
 **/a.out
 **/*.o
 **/*.out

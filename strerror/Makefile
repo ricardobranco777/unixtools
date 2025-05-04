@@ -1,6 +1,5 @@
 .include "${.CURDIR}/Makefile.inc"
 
-OPSYS:sh = uname
 PROG=	strerror
 WARNS=	3
 CFLAGS+= -O2
@@ -14,14 +13,5 @@ MK_DEBUG_FILES=	no
 LINKS=		${BINDIR}/strerror ${BINDIR}/strsignal \
 		${BINDIR}/strerror ${BINDIR}/gai_strerror
 
-.if ${OPSYS} == "NetBSD"
-BINDIR= /usr/pkg/bin
-.else
-BINDIR= /usr/local/bin
-.endif
-
-.if ${OPSYS} == "NetBSD" || ${OPSYS} == "OpenBSD"
-${PROG}:	${SRCS}
-.endif
-
+.include "${.CURDIR}/../Makefile.bsdinc"
 .include <bsd.prog.mk>
