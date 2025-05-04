@@ -55,22 +55,20 @@ main(int argc, char *argv[])
 
 	for (; *argv != NULL; argv++) {
 		if ((value = xatoi(*argv)) >= 0) {
-			for (i = 0; i < nitems(exits); i++) {
+			for (i = 0; i < nitems(exits); i++)
 				if (exits[i].value == value) {
 					print(value, exits[i].name);
 					break;
 				}
-			}
 			if (i == nitems(exits))
 				errx(1, "Unknown exit code: %s", *argv);
 		} else {
 			n = strncmp(*argv, "EX_", 3) ? 3 : 0;
-			for (i = 0; i < nitems(exits); i++) {
+			for (i = 0; i < nitems(exits); i++)
 				if (strcmp(*argv, exits[i].name + n) == 0) {
 					print(exits[i].value, exits[i].name);
 					break;
 				}
-			}
 			if (i == nitems(exits))
 				errx(1, "Unknown exit name: %s", *argv);
 		}

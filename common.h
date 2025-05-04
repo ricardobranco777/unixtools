@@ -1,3 +1,5 @@
+/* SPDX-License-Identifier: BSD-2-Clause */
+
 #ifdef __linux__
 extern char *__progname;
 #define getprogname()   (__progname)
