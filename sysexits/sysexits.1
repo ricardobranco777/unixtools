@@ -38,30 +38,6 @@ or simply
 .El
 .Sh EXIT STATUS
 .Ex -std sysexits
-.Sh EXAMPLES
-Print all symbolic exit codes:
-.Bd -literal -offset indent
-$ sysexits
-.Ed
-.Pp
-Get the symbolic name of code 64:
-.Bd -literal -offset indent
-$ sysexits 64
-64    EX_USAGE
-.Ed
-.Pp
-Use a name without the
-.Dq EX_
-prefix:
-.Bd -literal -offset indent
-$ sysexits USAGE
-64    EX_USAGE
-.Ed
-.Pp
-Name-only output:
-.Bd -literal -offset indent
-$ sysexits -n 64
-EX_USAGE
 .Ed
 .Sh SEE ALSO
 .Xr sysexits 3
