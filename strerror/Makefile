@@ -13,5 +13,5 @@ MK_DEBUG_FILES=	no
 LINKS=		${BINDIR}/strerror ${BINDIR}/strsignal \
 		${BINDIR}/strerror ${BINDIR}/gai_strerror
 
-.include "${.CURDIR}/../Makefile.bsdinc"
+.include "${.CURDIR}/../Makefile.inc"
 .include <bsd.prog.mk>

@@ -9,5 +9,5 @@ SRCS+=	${HDRS}
 CLEANFILES+=	${HDRS}
 MK_DEBUG_FILES=	no
 
-.include "${.CURDIR}/../Makefile.bsdinc"
+.include "${.CURDIR}/../Makefile.inc"
 .include <bsd.prog.mk>

@@ -5,5 +5,5 @@ CFLAGS+= -O2
 MK_DEBUG_FILES=	no
 MAN=
 
-.include "${.CURDIR}/../Makefile.bsdinc"
+.include "${.CURDIR}/../Makefile.inc"
 .include <bsd.prog.mk>

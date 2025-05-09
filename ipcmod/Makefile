@@ -5,5 +5,5 @@ MK_DEBUG_FILES= no
 MAN=
 SRCS=	ipcmod.c common.c common.h
 
-.include "${.CURDIR}/../Makefile.bsdinc"
+.include "${.CURDIR}/../Makefile.inc"
 .include <bsd.prog.mk>
