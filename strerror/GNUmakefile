@@ -4,6 +4,7 @@ CFLAGS	= -Wall -Wextra -O2
 LDFLAGS	=
 SRCS	= strerror.c common.c
 HDRS	= errnos.h signos.h gerrnos.h common.h
+CLEANFILES= errnos.h signos.h gerrnos.h
 
 OSTYPE	!= uname
 ifeq ($(OSTYPE),SunOS)
@@ -14,20 +15,16 @@ endif
 all:	$(BIN)
 
 strerror: $(SRCS) $(HDRS)
-	$(CC) -o $@ $(LDFLAGS) $(CFLAGS) $(SRCS)
+	$(CC) -o $@ $(CFLAGS) $(LDFLAGS) $(SRCS)
 
 strsignal: $(SRCS) $(HDRS)
-	$(CC) -o $@ $(LDFLAGS) $(CFLAGS) $(SRCS)
+	$(CC) -o $@ $(CFLAGS) $(LDFLAGS) $(SRCS)
 
 gai_strerror: $(SRCS) $(HDRS)
-	$(CC) -o $@ $(LDFLAGS) $(CFLAGS) $(SRCS)
-
-.PHONY: clean
-clean:
-	$(RM) $(BIN) errnos.h signos.h gerrnos.h
+	$(CC) -o $@ $(CFLAGS) $(LDFLAGS) $(SRCS)
 
 .PHONY: test
 test:
 	./test.sh
 
-include Makefile.inc
+include Makefile.inc ../GNUmakefile.inc

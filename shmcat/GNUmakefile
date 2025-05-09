@@ -1,23 +1,14 @@
 BIN	= shmcat
-BINDIR	= /usr/local/bin/
-
 CC	= gcc
-CFLAGS	= -Wall -O2
+CFLAGS	= -Wall -Wextra -O2
+LDFLAGS	=
+SRCS	= $(BIN).c common.c
+HDRS	= common.h
 
 .PHONY: all
 all:	$(BIN)
 
-$(BIN):	$(BIN).c
-	$(CC) -o $@ $(CFLAGS) $< common.c
+$(BIN):	$(SRCS) $(HDRS)
+	$(CC) -o $@ $(CFLAGS) $(LDFLAGS) $(SRCS)
 
-.PHONY: install
-install: $(BIN)
-	@install -s -m 755 $(BIN) $(BINDIR)
-
-.PHONY: uninstall
-uninstall:
-	@rm -f $(BINDIR)/$(BIN)
-
-.PHONY: clean
-clean:
-	@rm -f $(BIN) *.o
+include ../GNUmakefile.inc
