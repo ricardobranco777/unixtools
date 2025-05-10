@@ -9,6 +9,7 @@
 #include <netdb.h>
 #include <errno.h>
 #include <err.h>
+#include <limits.h>
 
 #include "common.h"
 
