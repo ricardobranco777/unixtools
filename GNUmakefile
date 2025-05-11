@@ -1,13 +1,13 @@
 SUBDIRS := ipcmod shmcat sigwincher strerror sysexits
 
-.PHONY: all clean $(SUBDIRS)
+.PHONY: all install clean $(SUBDIRS)
 
 all:	$(SUBDIRS)
 
 $(SUBDIRS):
 	$(MAKE) -C $@
 
-clean:
+install clean:
 	for dir in $(SUBDIRS); do \
-		$(MAKE) -C $$dir clean; \
+		$(MAKE) -C $$dir $@; \
 	done
