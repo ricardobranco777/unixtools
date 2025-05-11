@@ -12,12 +12,8 @@
 
 #include "common.h"
 
-#ifndef NSIG_MAX
-#if defined(NSIG)
-#define NSIG_MAX NSIG
-#elif defined(_NSIG)
-#define NSIG_MAX _NSIG
-#endif
+#if !defined(NSIG) && defined(_NSIG)
+#define NSIG	_NSIG
 #endif
 
 #define USAGE_STRERROR		"%s [-n] [errno]..."
@@ -86,9 +82,9 @@ getmax(struct entry *list, int items)
 	if (strfunc == xstrerror)
 		return (ELAST);
 #endif
-#ifdef NSIG_MAX
+#ifdef NSIG
 	if (strfunc == xstrsignal)
-		return (NSIG_MAX - 1);
+		return (NSIG - 1);
 #endif
 #ifdef EAI_MAX
 	if (strfunc == xgai_strerror)
