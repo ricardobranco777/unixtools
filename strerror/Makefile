@@ -2,6 +2,7 @@
 
 PROG=	strerror
 WARNS=	3
+WARNINGS=	yes
 CFLAGS+= -O2
 HDRS=	errnos.h signos.h gerrnos.h
 SRCS=	strerror.c common.c common.h

@@ -1,5 +1,6 @@
 PROG=	sigwincher
 WARNS=	3
+WARNINGS=	yes
 CFLAGS+= -O2
 
 MK_DEBUG_FILES=	no
