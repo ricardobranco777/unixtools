@@ -16,9 +16,9 @@
 #define NSIG	_NSIG
 #endif
 
-#define USAGE_STRERROR		"%s [-n] [errno]..."
-#define USAGE_STRSIGNAL		"%s [-n] [[SIG]name]... [signum]..."
-#define USAGE_GAI_STRERROR	"%s [-n] [errcode]..."
+#define USAGE_STRERROR		"Usage: %s [-n] [errno]..."
+#define USAGE_STRSIGNAL		"Usage: %s [-n] [[SIG]name]... [signum]..."
+#define USAGE_GAI_STRERROR	"Usage: %s [-n] [errcode]..."
 
 struct entry {
 	int value;
@@ -78,6 +78,7 @@ static int
 getmax(struct entry *list, int items)
 {
 	int i, max = 0;
+
 #ifdef ELAST
 	if (strfunc == xstrerror)
 		return (ELAST);
@@ -93,19 +94,18 @@ getmax(struct entry *list, int items)
 	for (i = 0; i < items; i++)
 		if (abs(list[i].value) > max)
 			max = abs(list[i].value);
+
 	return max;
 }
 
 int
 main(int argc, char *argv[])
 {
-	int i, n, items, value;
 	struct entry *list;
-	const char *usage;
-	const char *str;
-	int ch;
-
+	const char *str, *usage;
+	int ch, i, n, items, value;
 	const char *progname = getprogname();
+
 	if (!strncmp(progname, "strerror", sizeof("strerror") - 1)) {
 		list = errlist;
 		items = nitems(errlist);

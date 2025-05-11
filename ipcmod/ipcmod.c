@@ -25,9 +25,11 @@
 #include "common.h"
 
 #ifdef CLONE_NEWIPC
-#define USAGE	"%s [-i PID] -m|-q|-s MODE SHMID|MSQID|SEMID..."
+#define USAGE	"Usage: %s [-i PID] -m|-q|-s MODE SHMID|MSQID|SEMID..."
+#define GETOPT	"i:mqs"
 #else
 #define USAGE	"Usage: %s -m|-q|-s MODE SHMID|MSQID|SEMID..."
+#define GETOPT	"mqs"
 #endif
 
 static void
@@ -71,6 +73,10 @@ shmmod(char *argv[], unsigned short mode)
 {
 	struct shmid_ds info;
 	int id;
+#ifdef SHM_LOCKED
+	void *addr;
+	int cmd;
+#endif
 
 	while (*++argv != NULL) {
 		if ((id = xatoi(*argv)) < 0)
@@ -86,14 +92,12 @@ shmmod(char *argv[], unsigned short mode)
 		if ((mode & SHM_DEST) != 0 && shmctl(id, IPC_RMID, NULL) == -1)
 			err(1, "IPC_RMID: %d", id);
 
-		int cmd;
 		if (mode & SHM_LOCKED)
 			cmd = info.shm_perm.mode & SHM_LOCKED ? 0 : SHM_LOCK;
 		else
 			cmd = info.shm_perm.mode & SHM_LOCKED ? SHM_UNLOCK : 0;
 
 		if (cmd) {
-			void *addr;
 			/*
 			 * shmat() may fail if we are the last process attached
 			 * and SHM_RMID was set
@@ -115,21 +119,17 @@ int
 main(int argc, char *argv[])
 {
 	ipcmod_t ipcmod = NULL;
+	char *endptr = NULL;
+	int ch, mask = 0777;
 	unsigned short mode;
-	int mask = 0777;
-	int opt;
 #ifdef CLONE_NEWIPC
 	char path[PATH_MAX];
 	int fd = -1;
 	pid_t pid;
 #endif
 
-#ifdef CLONE_NEWIPC
-	while ((opt = getopt(argc, argv, "i:mqs")) != -1) {
-#else
-	while ((opt = getopt(argc, argv, "mqs")) != -1) {
-#endif
-		switch (opt) {
+	while ((ch = getopt(argc, argv, GETOPT)) != -1) {
+		switch (ch) {
 #ifdef CLONE_NEWIPC
 		case 'i':
 			if (fd != -1)
@@ -171,7 +171,6 @@ main(int argc, char *argv[])
 	if (argc < 2)
 		errx(1, USAGE, getprogname());
 
-	char *endptr = NULL;
 	mode = (unsigned short) strtoul(*argv, &endptr, 8);
 	if (*endptr != '\0' || mode > mask)
 		errx(1, "Invalid mode: %s", *argv);

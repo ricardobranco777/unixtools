@@ -8,8 +8,8 @@
 #include <sys/shm.h>
 #ifdef __linux__
 #include <sys/stat.h>
-#include <fcntl.h>
 #include <limits.h>
+#include <fcntl.h>
 #include <sched.h>
 #endif
 
@@ -22,9 +22,11 @@
 #include "common.h"
 
 #ifdef CLONE_NEWIPC
-#define USAGE	"%s [-i PID] SHMID"
+#define USAGE	"Usage: %s [-i PID] SHMID"
+#define GETOPT	"i:"
 #else
-#define USAGE	"%s SHMID"
+#define USAGE	"Usage: %s SHMID"
+#define GETOPT	""
 #endif
 
 int
@@ -32,20 +34,15 @@ main(int argc, char *argv[])
 {
 	struct shmid_ds info;
 	void *addr;
-	int opt;
-	int id;
+	int ch, id;
 #ifdef CLONE_NEWIPC
 	char path[PATH_MAX];
 	int fd = -1;
 	pid_t pid;
 #endif
 
-#ifdef CLONE_NEWIPC
-	while ((opt = getopt(argc, argv, "i:")) != -1) {
-#else
-	while ((opt = getopt(argc, argv, "")) != -1) {
-#endif
-		switch (opt) {
+	while ((ch = getopt(argc, argv, GETOPT)) != -1) {
+		switch (ch) {
 #ifdef CLONE_NEWIPC
 		case 'i':
 			if (fd != -1)

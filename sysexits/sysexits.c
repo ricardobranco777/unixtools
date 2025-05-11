@@ -3,14 +3,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <errno.h>
-#include <err.h>
 #include <unistd.h>
 #include <sysexits.h>
+#include <errno.h>
+#include <err.h>
 
 #include "common.h"
 
-#define USAGE	"%s [-n] [exitcode]..."
+#define USAGE	"Usage: %s [-n] [exitcode]..."
 
 static struct {
 	int value;
