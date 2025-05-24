@@ -4,6 +4,7 @@ strerror/gai_strerror
 sysexits/sysexits
 ipcmod/ipcmod
 shmcat/shmcat
+wol/wol
 **/a.out
 **/*.o
 **/*.out

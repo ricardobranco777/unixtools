@@ -1,4 +1,4 @@
-SUBDIRS := ipcmod shmcat strerror sysexits
+SUBDIRS := ipcmod shmcat strerror sysexits wol
 
 .PHONY: all install clean $(SUBDIRS)
 

@@ -1,0 +1,54 @@
+.\" Copyright (c) 2025
+.Dd April 21, 2025
+.Dt WOL 1
+.Os
+.Sh NAME
+.Nm wol
+.Nd Send Wake-on-LAN magic packets to hosts
+.Sh SYNOPSIS
+.Nm
+.Op Fl i Ar interface
+.Op Fl P Ar port
+.Op Fl p Ar password
+.Ar lladdr ...
+.Sh DESCRIPTION
+The
+.Nm
+utility sends Wake-on-LAN (WoL) magic packets to hosts on a local network.
+.Pp
+Each
+.Ar lladdr
+argument can be a MAC address in the form
+.Sq xx:xx:xx:xx:xx:xx
+or an entry from
+.Pa /etc/ethers .
+.Pp
+The options are as follows:
+.Bl -tag -width Ds
+.It Fl i Ar interface
+Specify the network interface to use.
+.It Fl P Ar port
+Specify the destination UDP port. Defaults to 9.
+.It Fl p Ar password
+Specify a SecureOn password in MAC address format (e.g., xx:xx:xx:xx:xx:xx).
+.El
+.Sh IMPLEMENTATION NOTES
+.Pp
+On FreeBSD and NetBSD, built-in tools such as
+.Xr wake 8
+and
+.Xr wakeonlan 8
+require access to
+.Pa /dev/bpf .
+.Sh FILES
+.Bl -tag -width "/etc/ethers" -compact
+.It Pa /etc/ethers
+ethernet address database
+MAC-to-hostname mapping file.
+.El
+.Sh SEE ALSO
+.Xr ethers 5 ,
+.Xr wake 8 (FreeBSD),
+.Xr wakeonlan 8 (NetBSD)
+.Sh AUTHORS
+.An Ricardo Branco
