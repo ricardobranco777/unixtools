@@ -1,9 +1,10 @@
+iface/iface
+ipcmod/ipcmod
+shmcat/shmcat
 strerror/strerror
 strerror/strsignal
 strerror/gai_strerror
 sysexits/sysexits
-ipcmod/ipcmod
-shmcat/shmcat
 wol/wol
 **/a.out
 **/*.o
