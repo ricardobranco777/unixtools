@@ -31,6 +31,10 @@
 
 #include "common.h"
 
+#if defined(__GLIBC__) && (__GLIBC__ < 2 || (__GLIBC__ == 2 && __GLIBC_MINOR__ < 38))
+#define strlcpy(dst, src, len)	snprintf(dst, len, "%s", src)
+#endif
+
 #define USAGE "Usage: %s [-i interface] [-P port] [-p password] lladdr..."
 
 static in_addr_t
@@ -46,7 +50,7 @@ get_broadcast_address(const char *ifname)
 		err(1, "socket");
 
 	(void)memset(&ifr, 0, sizeof(ifr));
-	(void)strncpy(ifr.ifr_name, ifname, sizeof(ifr.ifr_name));
+	(void)strlcpy(ifr.ifr_name, ifname, sizeof(ifr.ifr_name));
 
 	if (ioctl(sock, SIOCGIFBRDADDR, &ifr) == -1)
 		err(1, "ioctl: %s", ifname);
@@ -118,7 +122,7 @@ main(int argc, char *argv[])
 	while ((ch = getopt(argc, argv, "i:P:p:")) != -1) {
 		switch (ch) {
 		case 'i':
-			(void)strncpy(ifname, optarg, sizeof(ifname) - 1);
+			(void)strlcpy(ifname, optarg, sizeof(ifname));
 			break;
 		case 'P':
 			port = xatoi(optarg); 
