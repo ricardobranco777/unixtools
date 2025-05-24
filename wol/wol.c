@@ -31,10 +31,6 @@
 
 #include "common.h"
 
-#if defined(__GLIBC__) && (__GLIBC__ < 2 || (__GLIBC__ == 2 && __GLIBC_MINOR__ < 38))
-#define strlcpy(dst, src, len)	snprintf(dst, len, "%s", src)
-#endif
-
 #define USAGE "Usage: %s [-i interface] [-P port] [-p password] lladdr..."
 
 static in_addr_t
