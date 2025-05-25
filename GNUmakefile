@@ -1,4 +1,9 @@
-SUBDIRS := iface ipcmod shmcat strerror sysexits wol
+SUBDIRS := confstr iface ipcmod pathconf shmcat strerror sysconf sysexits wol
+
+OSTYPE  != uname
+ifeq ($(OSTYPE),SunOS)
+SUBDIRS += sysinfo
+endif
 
 .PHONY: all install clean $(SUBDIRS)
 

@@ -1,3 +1,11 @@
+confstr/confstr
+confstr/confstrs.h
+pathconf/pathconf
+pathconf/pathconfs.h
+sysconf/sysconf
+sysconf/sysconfs.h
+sysinfo/sysinfo
+sysinfo/sysinfos.h
 iface/iface
 ipcmod/ipcmod
 shmcat/shmcat
