@@ -1,10 +1,10 @@
-PROG= iface
-WARNS= 3
-WARNINGS= yes
-CFLAGS+= -O2
-MK_DEBUG_FILES= no
-SRCS=	iface.c common.h
+PROG=	iface
+SRCS=	iface.c
 MAN=
+
+MK_DEBUG_FILES=	no
+WARNINGS=	yes
+WARNS=		3
 
 .include "${.CURDIR}/../Makefile.inc"
 .include <bsd.prog.mk>

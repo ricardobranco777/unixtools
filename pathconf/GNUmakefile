@@ -1,9 +1,9 @@
 BIN	= pathconf
 CC	= gcc
-CFLAGS	= -Wall -Wextra -O2
+CFLAGS	= -Wall -Wextra -O2 -I. -I..
 LDFLAGS	=
 SRCS	= $(BIN).c
-HDRS	= pathconfs.h common.h
+HDRS	= pathconfs.h ../common.h
 CLEANFILES= pathconfs.h
 
 .PHONY: all

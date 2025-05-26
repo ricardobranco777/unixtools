@@ -1,9 +1,9 @@
 BIN	= confstr
 CC	= gcc
-CFLAGS	= -Wall -Wextra -O2
+CFLAGS	= -Wall -Wextra -O2 -I. -I..
 LDFLAGS	=
 SRCS	= $(BIN).c
-HDRS	= confstrs.h common.h
+HDRS	= confstrs.h ../common.h
 CLEANFILES= confstrs.h
 
 .PHONY: all

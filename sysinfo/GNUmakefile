@@ -1,9 +1,9 @@
 BIN	= sysinfo
 CC	= gcc
-CFLAGS	= -Wall -Wextra -O2
+CFLAGS	= -Wall -Wextra -O2 -I. -I..
 LDFLAGS	=
 SRCS	= $(BIN).c
-HDRS	= sysinfos.h common.h
+HDRS	= sysinfos.h ../common.h
 CLEANFILES= sysinfos.h
 
 .PHONY: all

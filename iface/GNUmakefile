@@ -1,9 +1,9 @@
 BIN	= iface
 CC	= gcc
-CFLAGS	= -Wall -Wextra -O2
+CFLAGS	= -Wall -Wextra -O2 -I. -I..
 LDFLAGS	=
 SRCS	= $(BIN).c
-HDRS	= common.h
+HDRS	= ../common.h
 
 OSTYPE	!= uname
 ifeq ($(OSTYPE),SunOS)

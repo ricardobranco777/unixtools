@@ -1,9 +1,9 @@
 BIN	= sysconf
 CC	= gcc
-CFLAGS	= -Wall -Wextra -O2
+CFLAGS	= -Wall -Wextra -O2 -I. -I..
 LDFLAGS	=
 SRCS	= $(BIN).c
-HDRS	= sysconfs.h common.h
+HDRS	= sysconfs.h ../common.h
 CLEANFILES= sysconfs.h
 
 .PHONY: all

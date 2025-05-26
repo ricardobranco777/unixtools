@@ -1,14 +1,16 @@
 .include "${.CURDIR}/Makefile.inc"
 
+.PATH:	${.CURDIR}/..
+
 PROG=	sysexits
-WARNS=	3
-WARNINGS=	yes
-CFLAGS+= -O2
 HDRS=	exits.h
-SRCS=	sysexits.c common.c common.h
+SRCS=	sysexits.c common.c
 SRCS+=	${HDRS}
 CLEANFILES+=	${HDRS}
+
 MK_DEBUG_FILES=	no
+WARNINGS=	yes
+WARNS=		3
 
 .include "${.CURDIR}/../Makefile.inc"
 .include <bsd.prog.mk>

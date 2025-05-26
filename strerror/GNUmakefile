@@ -1,9 +1,9 @@
 BIN	= strerror strsignal gai_strerror
 CC	= gcc
-CFLAGS	= -Wall -Wextra -O2
+CFLAGS	= -Wall -Wextra -O2 -I. -I..
 LDFLAGS	=
-SRCS	= strerror.c common.c
-HDRS	= errnos.h signos.h gerrnos.h common.h
+SRCS	= strerror.c ../common.c
+HDRS	= errnos.h signos.h gerrnos.h ../common.h
 CLEANFILES= errnos.h signos.h gerrnos.h
 
 OSTYPE	!= uname
