@@ -20,13 +20,12 @@ On Linux systems, if the
 option is given, the program enters the IPC namespace of the specified
 .Ar pid
 before accessing the shared memory segment.
-.Pp
 This is useful in containerized environments or when inspecting the memory
 of another IPC namespace.
 .Sh OPTIONS
 .Bl -tag -width "-i pid"
 .It Fl i Ar pid
-Enter the IPC namespace of the process identified by
+On Linux, enter the IPC namespace of the process identified by
 .Ar pid
 (using
 .Xr setns 2 )
