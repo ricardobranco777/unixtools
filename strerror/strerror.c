@@ -18,7 +18,7 @@
 
 #define USAGE_STRERROR		"Usage: %s [-n] [errno]..."
 #define USAGE_STRSIGNAL		"Usage: %s [-n] [[SIG]name]... [signum]..."
-#define USAGE_GAI_STRERROR	"Usage: %s [-n] [errcode]..."
+#define USAGE_GAI_STRERROR	"Usage: %s [-n] [[EAI_]name]... [number]..."
 
 struct entry {
 	int value;
