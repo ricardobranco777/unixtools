@@ -17,11 +17,8 @@ all:	$(BIN)
 strerror: $(SRCS) $(HDRS)
 	$(CC) -o $@ $(CFLAGS) $(LDFLAGS) $(SRCS)
 
-strsignal: $(SRCS) $(HDRS)
-	$(CC) -o $@ $(CFLAGS) $(LDFLAGS) $(SRCS)
-
-gai_strerror: $(SRCS) $(HDRS)
-	$(CC) -o $@ $(CFLAGS) $(LDFLAGS) $(SRCS)
+strsignal gai_strerror: strerror
+	ln -f $^ $@ 2>/dev/null || cp -f $^ $@
 
 .PHONY: test
 test:
