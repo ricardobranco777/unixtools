@@ -32,16 +32,6 @@ print(int value, const char *name, const char *str)
 		printf("%d\t%-20s %s\n", value, name, str);
 }
 
-/* Make strerror() & strsignal() return const char* */
-#define XSTRFUNC(func)	\
-static const char *	\
-x##func(int n)		\
-{			\
-	const char *s;	\
-	s = func(n);	\
-	return (s);	\
-}
-
 XSTRFUNC(strerror)
 
 static int

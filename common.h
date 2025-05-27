@@ -13,4 +13,14 @@ extern char *__progname;
 #define strlcpy(dst, src, len)	snprintf(dst, len, "%s", src)
 #endif
 
+/* Make strerror() & strsignal() return const char * */
+#define XSTRFUNC(func)	\
+static const char *	\
+x##func(int n)		\
+{			\
+	const char *s;	\
+	s = func(n);	\
+	return (s);	\
+}
+
 int xatoi(const char *str);
