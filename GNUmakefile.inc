@@ -1,5 +1,6 @@
-BINDIR	=	/usr/local/bin
-MANDIR	=	/usr/local/share/man/man1
+PREFIX	?=	/usr/local
+BINDIR	=	$(DESTDIR)$(PREFIX)/bin
+MANDIR	=	$(DESTDIR)$(PREFIX)/share/man/man1
 CLEANFILES+=	$(BIN)
 
 OSTYPE  != uname
