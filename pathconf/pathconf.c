@@ -15,7 +15,7 @@
 
 #include "common.h"
 
-#define USAGE	"Usage: %s [-n] [[_PC_]name]..."
+#define USAGE	"Usage: %s [-n] [pathname] [[_PC_]name]..."
 
 static struct {
 	int value;
@@ -24,6 +24,7 @@ static struct {
 #include "pathconfs.h"
 };
 
+static char *path = NULL;
 static int nflag;
 
 static void
@@ -35,7 +36,7 @@ print(int index)
 	long val;
 
 	errno = 0;
-	if ((val = pathconf(".", value)) == -1)
+	if ((val = pathconf((path != NULL) ? path : ".", value)) == -1)
 		str = strdup((errno == EINVAL) ? "invalid" : "undefined");
 	else
 		(void)asprintf(&str, "%ld", val);
@@ -66,6 +67,8 @@ main(int argc, char *argv[])
 	}
 
 	argv += optind;
+	if (*argv != NULL && strchr(*argv, '/') != NULL)
+		path = *argv++;
 
 	if (*argv == NULL) {
 		for (i = 0; i < nitems(list); i++)
