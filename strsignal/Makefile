@@ -2,9 +2,9 @@
 
 .PATH:	${.CURDIR}/..
 
-PROG=	strerror
-HDRS=	errnos.h
-SRCS=	strerror.c common.c
+PROG=	strsignal
+HDRS=	signos.h
+SRCS=	strsignal.c common.c
 SRCS+=	${HDRS}
 CLEANFILES+=	${HDRS}
 

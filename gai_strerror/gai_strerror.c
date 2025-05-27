@@ -5,12 +5,12 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-#include <errno.h>
 #include <err.h>
+#include <netdb.h>
 
 #include "common.h"
 
-#define USAGE	"Usage: %s [-n] [errno]..."
+#define USAGE	"Usage: %s [-n] [[EAI_]name]... [number]..."
 
 struct entry {
 	int value;
@@ -18,7 +18,7 @@ struct entry {
 };
 
 static struct entry list[] = {
-#include "errnos.h"
+#include "gerrnos.h"
 };
 
 static int nflag;
@@ -32,29 +32,27 @@ print(int value, const char *name, const char *str)
 		printf("%d\t%-20s %s\n", value, name, str);
 }
 
-/* Make strerror() & strsignal() return const char* */
-#define XSTRFUNC(func)	\
-static const char *	\
-x##func(int n)		\
-{			\
-	const char *s;	\
-	s = func(n);	\
-	return (s);	\
+/* Make gai_strerror() support positive integers */
+static const char *
+xgai_strerror(int n)
+{
+#ifndef EAI_MAX
+	n = -abs(n);
+#endif
+	return gai_strerror(n);
 }
-
-XSTRFUNC(strerror)
 
 static int
 getmax(void)
 {
-#ifdef ELAST
-	return (ELAST);
+#ifdef EAI_MAX
+	return (EAI_MAX);
 #else
 	int i, max = 0;
 
 	for (i = 0; i < nitems(list); i++)
-		if (list[i].value > max)
-			max = list[i].value;
+		if (abs(list[i].value) > max)
+			max = abs(list[i].value);
 
 	return (max);
 #endif
@@ -80,9 +78,9 @@ main(int argc, char *argv[])
 
 	if (*argv == NULL) {
 		for (value = 1; value <= getmax(); value++) {
-			str = xstrerror(value);
+			str = xgai_strerror(value);
 			for (i = 0; i < nitems(list); i++)
-				if (list[i].value == value) {
+				if (abs(list[i].value) == value) {
 					print(value, list[i].name, str);
 					if (nflag)
 						break;
@@ -94,19 +92,19 @@ main(int argc, char *argv[])
 	for (; *argv != NULL; argv++) {
 		if ((value = xatoi(*argv)) > 0) {
 			for (i = 0, str = NULL; i < nitems(list); i++)
-				if (list[i].value == value) {
-					if ((str = xstrerror(value)) == NULL)
+				if (abs(list[i].value) == value) {
+					if ((str = xgai_strerror(value)) == NULL)
 						break;
 					print(value, list[i].name, str);
 					if (nflag)
 						break;
 				}
 		} else {
-			n = strncmp(*argv, "E", 1) ? 1 : 0;
+			n = strncmp(*argv, "EAI_", 4) ? 4 : 0;
 			for (i = 0, str = NULL; i < nitems(list); i++)
 				if (strcmp(*argv, list[i].name + n) == 0) {
 					value = list[i].value;
-					if ((str = xstrerror(value)) != NULL)
+					if ((str = xgai_strerror(value)) != NULL)
 						print(value, list[i].name, str);
 					break;
 				}

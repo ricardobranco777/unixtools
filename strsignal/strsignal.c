@@ -4,13 +4,17 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <signal.h>
 #include <unistd.h>
-#include <errno.h>
 #include <err.h>
 
 #include "common.h"
 
-#define USAGE	"Usage: %s [-n] [errno]..."
+#if !defined(NSIG) && defined(_NSIG)
+#define NSIG	_NSIG
+#endif
+
+#define USAGE	"Usage: %s [-n] [[SIG]name]... [signum]..."
 
 struct entry {
 	int value;
@@ -18,7 +22,7 @@ struct entry {
 };
 
 static struct entry list[] = {
-#include "errnos.h"
+#include "signos.h"
 };
 
 static int nflag;
@@ -42,13 +46,13 @@ x##func(int n)		\
 	return (s);	\
 }
 
-XSTRFUNC(strerror)
+XSTRFUNC(strsignal)
 
 static int
 getmax(void)
 {
-#ifdef ELAST
-	return (ELAST);
+#ifdef NSIG
+	return (NSIG - 1);
 #else
 	int i, max = 0;
 
@@ -80,7 +84,7 @@ main(int argc, char *argv[])
 
 	if (*argv == NULL) {
 		for (value = 1; value <= getmax(); value++) {
-			str = xstrerror(value);
+			str = xstrsignal(value);
 			for (i = 0; i < nitems(list); i++)
 				if (list[i].value == value) {
 					print(value, list[i].name, str);
@@ -95,18 +99,18 @@ main(int argc, char *argv[])
 		if ((value = xatoi(*argv)) > 0) {
 			for (i = 0, str = NULL; i < nitems(list); i++)
 				if (list[i].value == value) {
-					if ((str = xstrerror(value)) == NULL)
+					if ((str = xstrsignal(value)) == NULL)
 						break;
 					print(value, list[i].name, str);
 					if (nflag)
 						break;
 				}
 		} else {
-			n = strncmp(*argv, "E", 1) ? 1 : 0;
+			n = strncmp(*argv, "SIG", 3) ? 3 : 0;
 			for (i = 0, str = NULL; i < nitems(list); i++)
 				if (strcmp(*argv, list[i].name + n) == 0) {
 					value = list[i].value;
-					if ((str = xstrerror(value)) != NULL)
+					if ((str = xstrsignal(value)) != NULL)
 						print(value, list[i].name, str);
 					break;
 				}

@@ -10,8 +10,8 @@ iface/iface
 ipcmod/ipcmod
 shmcat/shmcat
 strerror/strerror
-strerror/strsignal
-strerror/gai_strerror
+strsignal/strsignal
+gai_strerror/gai_strerror
 sysexits/sysexits
 wol/wol
 */common.*
