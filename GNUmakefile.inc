@@ -10,9 +10,11 @@ else
 INSTALL	=	install
 endif
 
+LDFLAGS	+= -s
+
 .PHONY: install
 install: $(BIN)
-	$(INSTALL) -C -D -s -m 555 -t $(BINDIR) $(BIN)
+	$(INSTALL) -C -D -m 555 -t $(BINDIR) $(BIN)
 	$(INSTALL) -C -D -m 444 -t $(MANDIR) $(BIN).1
 
 .PHONY: clean
