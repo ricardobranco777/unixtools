@@ -1,4 +1,4 @@
-SUBDIRS := confstr gai_strerror iface ipcmod pathconf shmcat strerror strsignal sysconf sysexits wol
+SUBDIRS := confstr gai_strerror ipcmod pathconf shmcat strerror strsignal sysconf sysexits wol
 
 OSTYPE  != uname
 ifeq ($(OSTYPE),SunOS)
