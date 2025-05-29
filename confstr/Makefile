@@ -5,7 +5,6 @@ HDRS=	confstrs.h
 SRCS=	confstr.c
 SRCS+=	${HDRS}
 CLEANFILES+= ${HDRS}
-MAN=
 
 MK_DEBUG_FILES=	no
 WARNINGS=	yes

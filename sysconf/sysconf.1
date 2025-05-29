@@ -1,0 +1,35 @@
+.\" SPDX-License-Identifier: BSD-2-Clause
+.Dd May 29, 2025
+.Dt SYSCONF 1
+.Os
+.Sh NAME
+.Nm sysconf
+.Nd print runtime system configuration variables
+.Sh SYNOPSIS
+.Nm
+.Op Fl n
+.Op Ar [_SC_]name ...
+.Sh DESCRIPTION
+The
+.Nm
+utility prints runtime system configuration variables as defined by
+.Xr sysconf 3 .
+If no
+.Ar name
+is specified,
+.Nm
+prints all known variables.
+.Sh OPTIONS
+.Bl -tag -width "-n"
+.It Fl n
+Print only the value of each configuration variable without the variable name.
+.El
+.Sh SEE ALSO
+.Xr getconf 1 ,
+.Xr confstr 1 ,
+.Xr pathconf 1 ,
+.Xr sysconf 3
+.Sh AUTHORS
+.Nm
+was written by
+.An Ricardo Branco

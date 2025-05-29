@@ -1,0 +1,36 @@
+.\" SPDX-License-Identifier: BSD-2-Clause
+.Dd May 29, 2025
+.Dt CONFSTR 1
+.Os
+.Sh NAME
+.Nm confstr
+.Nd print configuration dependent string variables
+.Sh SYNOPSIS
+.Nm
+.Op Fl n
+.Op Ar [_CS_]name ...
+.Sh DESCRIPTION
+The
+.Nm
+utility prints the names and values of configuration dependent string variables as defined by
+.Xr confstr 3 .
+If no
+.Ar name
+is specified,
+.Nm
+prints all known variables.
+.Sh OPTIONS
+.Bl -tag -width "-n"
+.It Fl n
+Print only the value of each configuration variable without the variable name.
+.El
+.Sh SEE ALSO
+.Xr getconf 1 ,
+.Xr pathconf 1 ,
+.Xr sysconf 1 ,
+and
+.Xr confstr 3
+.Sh AUTHORS
+.Nm
+was written by
+.An Ricardo Branco

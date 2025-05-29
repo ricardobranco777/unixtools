@@ -1,0 +1,36 @@
+.\" SPDX-License-Identifier: BSD-2-Clause
+.Dd May 29, 2025
+.Dt PATHCONF 1
+.Os
+.Sh NAME
+.Nm pathconf
+.Nd print configuration variables for files
+.Sh SYNOPSIS
+.Nm
+.Op Fl n
+.Op Ar pathname
+.Op Ar [_PC_]name ...
+.Sh DESCRIPTION
+The
+.Nm
+utility prints the names and values of configuration variables for the specified
+.Ar pathname .
+If no
+.Ar name
+is specified,
+.Nm
+prints all known configuration values for the given path.
+.Sh OPTIONS
+.Bl -tag -width "-n"
+.It Fl n
+Print only the value of each configuration variable without the variable name.
+.El
+.Sh SEE ALSO
+.Xr getconf 1 ,
+.Xr confstr 1 ,
+.Xr sysconf 1 ,
+.Xr pathconf 3
+.Sh AUTHORS
+.Nm
+was written by
+.An "Ricardo Branco"

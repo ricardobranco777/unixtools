@@ -5,7 +5,6 @@ HDRS=	sysconfs.h
 SRCS=	sysconf.c
 SRCS+=	${HDRS}
 CLEANFILES+= ${HDRS}
-MAN=
 
 MK_DEBUG_FILES=	no
 WARNINGS=	yes

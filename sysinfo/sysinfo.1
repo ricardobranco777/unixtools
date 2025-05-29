@@ -1,0 +1,31 @@
+.\" SPDX-License-Identifier: BSD-2-Clause
+.Dd May 29, 2025
+.Dt SYSINFO 1
+.Os
+.Sh NAME
+.Nm sysinfo
+.Nd print overall system statistics
+.Sh SYNOPSIS
+.Nm
+.Op Fl n
+.Ar [SI_]name ...
+.Sh DESCRIPTION
+The
+.Nm
+utility prints system information strings, typically retrieved using
+.Xr sysinfo 2 .
+.Sh OPTIONS
+.Bl -tag -width "-n"
+.It Fl n
+Print only the value of each name without the corresponding label.
+.El
+.Sh SEE ALSO
+.Xr getconf 1 ,
+.Xr confstr 1 ,
+.Xr pathconf 1 ,
+.Xr sysconf 1 ,
+.Xr sysinfo 2
+.Sh AUTHORS
+.Nm
+was written by
+.An Ricardo Branco
