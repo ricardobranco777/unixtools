@@ -68,7 +68,7 @@ main(int argc, char *argv[])
 	}
 
 	argv += optind;
-	if (*argv != NULL && strchr(*argv, '/') != NULL)
+	if (*argv != NULL && (strchr(*argv, '/') != NULL || *argv[0] == '.'))
 		path = *argv++;
 
 	if (*argv == NULL) {
