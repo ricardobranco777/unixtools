@@ -34,13 +34,14 @@ print(int index)
 	int value = list[index].value;
 	char *str;
 	long val;
+	int ret;
 
-	errno = 0;
+	errno = ret = 0;
 	if ((val = pathconf((path != NULL) ? path : ".", value)) == -1)
-		str = strdup((errno == EINVAL) ? "invalid" : "undefined");
+		str = strdup((errno == EINVAL) ? "invalid" : "");
 	else
-		(void)asprintf(&str, "%ld", val);
-	if (str == NULL)
+		ret = asprintf(&str, "%ld", val);
+	if (str == NULL || ret == -1)
 		err(1, "malloc");
 
 	if (nflag)
