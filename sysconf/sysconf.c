@@ -31,15 +31,22 @@ print(int index)
 {
 	const char *name = list[index].name;
 	int value = list[index].value;
-	char *str;
+	char *str = NULL;
 	long val;
+	int ret;
 
-	errno = 0;
-	if ((val = sysconf(value)) == -1L)
-		str = strdup((errno == EINVAL) ? "invalid" : "undefined");
-	else
-		(void)asprintf(&str, "%ld", val);
-	if (str == NULL)
+	errno = ret = 0;
+	if ((val = sysconf(value)) == -1L) {
+#ifdef _SC_ULONG_MAX
+		if (value == _SC_ULONG_MAX)
+			ret = asprintf(&str, "%lu", (unsigned long)val);
+		else
+#endif
+			str = strdup((errno == EINVAL) ? "invalid" : "");
+	} else {
+		ret = asprintf(&str, "%ld", val);
+	}
+	if (str == NULL || ret == -1)
 		err(1, "malloc");
 
 	if (nflag)
