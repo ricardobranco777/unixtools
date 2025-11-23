@@ -1,5 +1,6 @@
 confstr/confstr
 confstr/confstrs.h
+holes/holes
 pathconf/pathconf
 pathconf/pathconfs.h
 sysconf/sysconf
