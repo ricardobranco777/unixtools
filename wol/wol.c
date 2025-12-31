@@ -46,7 +46,7 @@ get_broadcast_address(const char *ifname)
 		err(1, "socket");
 
 	(void)memset(&ifr, 0, sizeof(ifr));
-	(void)strlcpy(ifr.ifr_name, ifname, sizeof(ifr.ifr_name));
+	(void)strncpy(ifr.ifr_name, ifname, sizeof(ifr.ifr_name));
 
 	if (ioctl(sock, SIOCGIFBRDADDR, &ifr) == -1)
 		err(1, "ioctl: %s", ifname);
@@ -118,7 +118,7 @@ main(int argc, char *argv[])
 	while ((ch = getopt(argc, argv, "i:P:p:")) != -1) {
 		switch (ch) {
 		case 'i':
-			(void)strlcpy(ifname, optarg, sizeof(ifname));
+			(void)strncpy(ifname, optarg, sizeof(ifname) - 1);
 			break;
 		case 'P':
 			port = xatoi(optarg); 
