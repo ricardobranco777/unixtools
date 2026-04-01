@@ -11,7 +11,6 @@ Tested on the following platforms:
 - Illumos (OpenIndiana)
 - Linux
 - MacOS X
-- MidnightBSD
 - NetBSD
 - OpenBSD
 - Solaris 5.11
