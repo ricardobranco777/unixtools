@@ -44,7 +44,7 @@ print(int value, const char *name)
 	if (getrlimit(value, &rl) < 0)
 		err(1, "getrlimit: %s", name);
 
-	printf("%-20s\t%8s\t%8s\n", name,
+	printf("%-20s\t%12s\t%12s\n", name,
 	    strlimit(rl.rlim_cur, cur, sizeof(cur)),
 	    strlimit(rl.rlim_max, max, sizeof(max)));
 }
