@@ -1,3 +1,3 @@
-SUBDIR=	confstr gai_strerror ipcmod pathconf shmcat strerror strsignal sysconf sysexits wol
+SUBDIR=	confstr gai_strerror getrlimit ipcmod pathconf shmcat strerror strsignal sysconf sysexits wol
 
 .include <bsd.subdir.mk>
