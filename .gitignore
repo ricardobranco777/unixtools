@@ -1,5 +1,7 @@
 confstr/confstr
 confstr/confstrs.h
+getrlimit/getrlimit
+getrlimit/rlimits.h
 holes/holes
 pathconf/pathconf
 pathconf/pathconfs.h

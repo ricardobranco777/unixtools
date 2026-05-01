@@ -1,0 +1,84 @@
+.\" SPDX-License-Identifier: BSD-2-Clause
+.Dd May 2, 2026
+.Dt GETRLIMITS 1
+.Os
+.Sh NAME
+.Nm getrlimit
+.Nd print resource limit names and values
+.Sh SYNOPSIS
+.Nm
+.Op Fl n
+.Op Ar rlimit ...
+.Sh DESCRIPTION
+The
+.Nm
+utility prints resource limit constants and their current soft and hard
+limits as returned by
+.Xr getrlimit 2 .
+.Pp
+If no operands are given, all known resource limits are printed.
+.Pp
+Each operand is either a numeric resource limit code or a symbolic resource
+limit name.
+Symbolic names may be provided with or without the
+.Dq RLIMIT_
+prefix.
+.Pp
+Unless
+.Fl n
+is specified, output consists of four tab-separated fields:
+.Pp
+.Bl -tag -width "hard-limit" -compact
+.It name
+The symbolic resource limit name.
+.It soft-limit
+The current soft limit.
+.It hard-limit
+The current hard limit.
+.El
+.Pp
+A limit value equal to
+.Dv RLIM_INFINITY
+is printed as
+.Dq infinity .
+.Sh OPTIONS
+.Bl -tag -width Ds
+.It Fl n
+Print only the symbolic name of each matching resource limit, omitting the
+numeric code and limit values.
+.El
+.Sh OPERANDS
+.Bl -tag -width Ds
+.It Ar rlimit
+A numeric resource limit code, such as 7, or a symbolic name such as
+.Dq RLIMIT_NOFILE
+or simply
+.Dq NOFILE .
+.El
+.Sh EXIT STATUS
+.Ex -std getrlimit
+.Sh EXAMPLES
+Print all known resource limits:
+.Bd -literal -offset indent
+$ getrlimit
+.Ed
+.Pp
+Print the current soft and hard open file limits:
+.Bd -literal -offset indent
+$ getrlimit NOFILE
+.Ed
+.Pp
+Print only the symbolic names of all known resource limits:
+.Bd -literal -offset indent
+$ getrlimit -n
+.Ed
+.Sh SEE ALSO
+.Xr prlimit 1 ,
+.Xr prlimit 2 ,
+.Xr getrlimit 2 ,
+.Xr setrlimit 2
+.Sh STANDARDS
+Resource limit constants are system-dependent and are commonly defined in
+.In sys/resource.h .
+.Sh AUTHORS
+.An Ricardo Branco
