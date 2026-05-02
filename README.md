@@ -21,6 +21,8 @@ Also tested with musl library on Linux.
 
 - [confstr](confstr)
 - [gai_strerror](gai_strerror)
+- [getrlimit](getrlimit)
+- [holes](holes)
 - [iface](iface)
 - [ipcmod](ipcmod)
 - [pathconf](pathconf)
